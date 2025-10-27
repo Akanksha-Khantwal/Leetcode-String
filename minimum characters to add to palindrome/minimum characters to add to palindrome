@@ -1,0 +1,27 @@
+class Solution {
+  public:
+    int minChar(string &s) {
+        string rev=s;
+        reverse(rev.begin(),rev.end());
+        string final=s+'$'+rev;
+        vector<int>lps(final.size(),0);
+        int pre=0,suf=1;
+        while(suf<final.size()){
+            if(final[pre]==final[suf]){
+                lps[suf]=pre+1;
+                pre++;
+                suf++;
+            }
+            else{
+                if(pre==0){
+                    lps[suf]=0;
+                    suf++;
+                }
+                else{
+                    pre=lps[pre-1];
+                }
+            }
+        }
+        return s.size()-lps[final.size()-1];
+      }
+};
